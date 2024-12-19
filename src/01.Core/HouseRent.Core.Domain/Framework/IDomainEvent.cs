@@ -1,4 +1,6 @@
-﻿namespace HouseRent.Core.Domain.Framework;
-public interface IDomainEvent
+﻿using MediatR;
+
+namespace HouseRent.Core.Domain.Framework;
+public interface IDomainEvent: INotification
 {
 }

@@ -91,6 +91,4 @@ public sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBookin
 
         return booking.Id;
     }
-
-
 }

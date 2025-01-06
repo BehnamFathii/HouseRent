@@ -1,11 +1,18 @@
 ﻿namespace HouseRent.Core.Domain.Framework;
-public abstract class AggregateRoot<TId>(TId id) : BaseEntity<TId>(id)
+public abstract class AggregateRoot<TId> : BaseEntity<TId>, IAggregateRoot
 {
+    protected AggregateRoot(TId id) : base(id)
+    {
 
+    }
+    protected AggregateRoot() : base()
+    {
+
+    }
     private readonly List<IDomainEvent> _domainEvents = [];
 
     public IReadOnlyList<IDomainEvent> Events() =>
-        [.. _domainEvents];
+        _domainEvents;
 
 
     public void ClearDomainEvents()

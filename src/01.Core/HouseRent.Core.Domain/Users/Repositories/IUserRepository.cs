@@ -3,7 +3,7 @@
 namespace HouseRent.Core.Domain.Users.Repositories;
 public interface IUserRepository
 {
-    Task<User?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+    Task<User?> GetByIdAsync(long Id, CancellationToken cancellationToken = default);
 
-    void Add(User user);
+    Task Add(User user, CancellationToken cancellationToken = default);
 }

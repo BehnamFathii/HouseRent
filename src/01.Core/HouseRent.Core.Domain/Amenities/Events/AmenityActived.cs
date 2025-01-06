@@ -2,4 +2,4 @@
 
 namespace HouseRent.Core.Domain.Amenities.Events;
 
-public record AmenityActived(int id) : IDomainEvent;
+public record AmenityActived(long id) : IDomainEvent;

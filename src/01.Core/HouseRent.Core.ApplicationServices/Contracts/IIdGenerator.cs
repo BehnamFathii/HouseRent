@@ -1,5 +1,5 @@
 ﻿namespace HouseRent.Core.ApplicationServices.Contracts;
-public interface IdGenerator
+public interface IIdGenerator<T>
 {
-    int GetId();
+    T GetId();
 }

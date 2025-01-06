@@ -4,7 +4,7 @@ using HouseRent.Core.Domain.Shared.ValueObjects;
 
 namespace HouseRent.Core.Domain.Amenities.Events;
 
-public record AmenityCreated(int id,
-                          Title title,
-                          Description description,
-                          Money money) : IDomainEvent;
+public record AmenityCreated(long id,
+                             Title title,
+                             Description description,
+                             Money money) : IDomainEvent;

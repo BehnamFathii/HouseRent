@@ -9,22 +9,34 @@ using HouseRent.Core.Domain.Homes.Entities;
 using HouseRent.Core.Domain.Shared.ValueObjects;
 
 namespace HouseRent.Core.Domain.Bookings.Entities;
-public sealed class Booking : AggregateRoot<int>
+public sealed class Booking : AggregateRoot<long>
 {
-    private Booking(CreateBookingParameters parameters) : base(parameters.Id)
+    private Booking(
+        long id,
+        long homeId,
+        long userId,
+        DateRange duration,
+        Money priceForPeriod,
+        Money amenitiesUpCharge,
+        BookingStatus status,
+        DateTime createdOnUtc)
+        : base(id)
     {
-        HomeId = parameters.HomeId;
-        UserId = parameters.UserId;
-        Duration = parameters.Duration;
-        PriceForPeriod = parameters.PriceForPeriod;
-        AmenitiesUpCharge = parameters.AmenitiesUpCharge;
-        Status = parameters.Status;
-        CreatedOnUtc = parameters.CreatedOnUtc;
+        HomeId = homeId;
+        UserId = userId;
+        Duration = duration;
+        PriceForPeriod = priceForPeriod;
+        AmenitiesUpCharge = amenitiesUpCharge;
+        Status = status;
+        CreatedOnUtc = createdOnUtc;
     }
+    private Booking() : base()
+    {
 
-    public int HomeId { get; private set; }
+    }
+    public long HomeId { get; private set; }
 
-    public int UserId { get; private set; }
+    public long UserId { get; private set; }
 
     public DateRange Duration { get; private set; }
 
@@ -42,23 +54,24 @@ public sealed class Booking : AggregateRoot<int>
 
     public DateTime? GuestStatusOnUtc { get; private set; }
 
-    public static Booking Reserve(int id,
+    public static Booking Reserve(long id,
         Home home,
-        int userId,
+        long userId,
         DateRange duration,
         DateTime utcNow,
         PricingService pricingService)
     {
         var pricingDetails = pricingService.CalculatePrice(home, duration);
 
-        var booking = new Booking(new CreateBookingParameters(Id: id,
-        HomeId: home.Id,
-        UserId: userId,
-        Duration: duration,
-        PriceForPeriod: pricingDetails.PriceForPeriod,
-        AmenitiesUpCharge: pricingDetails.AmenitiesUpCharge,
-        Status: BookingStatus.Reserved,
-        CreatedOnUtc: utcNow));
+        var booking = new Booking(
+            id,
+            home.Id,
+            userId,
+            duration,
+            pricingDetails.PriceForPeriod,
+            pricingDetails.AmenitiesUpCharge,
+            BookingStatus.Reserved,
+            utcNow);
 
         booking.AddDomainEvent(new BookingReservedDomainEvent(booking.Id));
 
@@ -66,6 +79,7 @@ public sealed class Booking : AggregateRoot<int>
 
         return booking;
     }
+
 
     public Result Confirm(DateTime utcNow)
     {

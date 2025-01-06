@@ -2,7 +2,7 @@
 
 namespace HouseRent.Core.ApplicationServices.Bookings.Commands;
 public record ReserveBookingCommand(
-    int HomeId,
-    int UserId,
+    long HomeId,
+    long UserId,
     DateOnly StartDate,
-    DateOnly EndDate) : ICommand<int>;
+    DateOnly EndDate) : ICommand<long>;

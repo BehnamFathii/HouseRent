@@ -1,9 +1,9 @@
 ﻿namespace HouseRent.Core.ApplicationServices.Bookings.Queries.GetBooking;
 public sealed class BookingResponse
 {
-    public int Id { get; init; }
+    public long Id { get; init; }
 
-    public int UserId { get; init; }
+    public long UserId { get; init; }
 
     public int ApartmentId { get; init; }
 
@@ -20,4 +20,7 @@ public sealed class BookingResponse
     public DateOnly DurationEnd { get; init; }
 
     public DateTime CreatedOnUtc { get; init; }
+
+    public DateTime HostStatusOnUtc { get; set; }
+    public DateTime GuestStatusOnUtc { get; set; }
 }

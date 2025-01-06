@@ -2,4 +2,4 @@
 
 namespace HouseRent.Core.Domain.Bookings.Events;
 
-public sealed record BookingCancelledDomainEvent(int BookingId) : IDomainEvent;
+public sealed record BookingCancelledDomainEvent(long BookingId) : IDomainEvent;

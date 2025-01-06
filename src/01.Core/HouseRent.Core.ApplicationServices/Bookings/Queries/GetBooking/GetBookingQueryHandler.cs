@@ -17,7 +17,22 @@ public sealed class GetBookingQueryHandler : IQueryHandler<GetBookingQuery, Book
     {
         using var connection = _sqlConnectionFactory.CreateConnection();
 
-        const string query = "SELECT * FROM bookings WHERE id = @BookingId";
+        const string query = """
+            SELECT [Id]
+                ,[HomeId]
+                ,[UserId]
+                ,[Duration_Start] as DurationStart
+                ,[Duration_End] as DurationEnd
+                ,[PriceForPeriod]
+                ,[AmenitiesUpCharge]
+                ,[Status]
+                ,[CreatedOnUtc]
+                ,[HostStatusOnUtc]
+                ,[GuestStatusOnUtc]
+            FROM [dbo].[Bookings]
+            Where Id = @BookingId
+
+            """;
 
         var booking = await connection.QueryFirstOrDefaultAsync<BookingResponse>(query, new { request.BookingId });
 

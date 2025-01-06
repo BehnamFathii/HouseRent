@@ -33,6 +33,6 @@ public sealed class BookingReservedDomainEventHandler : INotificationHandler<Boo
         {
             return;
         }
-        await _emailService.SendAsync(user.Email, "خانه مورد نظر رزرو شد", "خانه مورد نظر رزرو شد. شما 30 دقیقه فرصت دارید تا رزرو خود را قطعی کنید.");
+        await _emailService.SendAsync(user.Email.Value, "خانه مورد نظر رزرو شد", "خانه مورد نظر رزرو شد. شما 30 دقیقه فرصت دارید تا رزرو خود را قطعی کنید.");
     }
 }

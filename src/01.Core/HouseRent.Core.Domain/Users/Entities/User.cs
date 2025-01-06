@@ -7,14 +7,19 @@ using HouseRent.Core.Domain.Users.Parameters;
 using HouseRent.Core.Domain.Users.ValueObjects;
 
 namespace HouseRent.Core.Domain.Users.Entities;
-public sealed class User : AggregateRoot<int>
+public sealed class User : AggregateRoot<long>
 {
-    public User(CreateUserParameter parameter) : base(parameter.id)
+    private User(long id, FirstName firstName, LastName lastName, Email email)
+     : base(id)
     {
-        FirstName = parameter.firstName;
-        LastName = parameter.lastName;
-        Email = parameter.emil;
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
         IsActive = true;
+    }
+    private User() : base()
+    {
+
     }
 
     public FirstName FirstName { get; private set; }
@@ -24,7 +29,7 @@ public sealed class User : AggregateRoot<int>
 
     public static User Create(CreateUserParameter parameter)
     {
-        var user = new User(parameter);
+        var user = new User(parameter.id, parameter.firstName, parameter.lastName, parameter.emil);
         user.AddDomainEvent(new UserCreated(parameter.id));
         return user;
     }

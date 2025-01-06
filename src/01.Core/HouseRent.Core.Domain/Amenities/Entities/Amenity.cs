@@ -6,13 +6,13 @@ using HouseRent.Core.Domain.Homes.ValueObjects;
 using HouseRent.Core.Domain.Shared.ValueObjects;
 
 namespace HouseRent.Core.Domain.Amenities.Entities;
-public sealed class Amenity : AggregateRoot<int>
+public sealed class Amenity : AggregateRoot<long>
 {
-    private Amenity(CreateAmenityParameter parameter) : base(parameter.id)
+    private Amenity(long id, Title title, Money price, Description description) : base(id)
     {
-        Title = parameter.title;
-        Price = parameter.money;
-        Description = parameter.description;
+        Title = title;
+        Price = price;
+        Description = description;
         IsActive = true;
     }
 
@@ -23,7 +23,7 @@ public sealed class Amenity : AggregateRoot<int>
 
     public static Amenity Create(CreateAmenityParameter parameter)
     {
-        var amenity = new Amenity(parameter);
+        var amenity = new Amenity(parameter.id, parameter.title, parameter.money, parameter.description);
         amenity.AddDomainEvent(new AmenityCreated(amenity.Id, amenity.Title, amenity.Description, amenity.Price));
         return amenity;
     }

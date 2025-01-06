@@ -5,29 +5,40 @@ using HouseRent.Core.Domain.Homes.ValueObjects;
 using HouseRent.Core.Domain.Shared.ValueObjects;
 
 namespace HouseRent.Core.Domain.Homes.Entities;
-public sealed class Home : AggregateRoot<int>
+public sealed class Home : AggregateRoot<long>
 {
-    private Home(CreateHomeParameter parameter) : base(parameter.id)
+    private Home(
+       long id,
+       Title title,
+       Description description,
+       Address address,
+       Money price,
+       List<HomeAmenity> amenities)
+       : base(id)
     {
-        Title = parameter.title;
-        Description = parameter.description;
-        Address = parameter.address;
-        Price = parameter.money;
-        Amenities = parameter.amenities;
+        Title = title;
+        Description = description;
+        Address = address;
+        Price = price;
+        HomeAmenities = amenities;
         IsActive = true;
+    }
+    private Home() : base()
+    {
+
     }
 
     public Title Title { get; private set; }
     public Description Description { get; private set; }
     public Address Address { get; private set; }
     public Money Price { get; private set; }
-    public List<int> Amenities { get; private set; } = [];
+    public List<HomeAmenity> HomeAmenities { get; private set; } = [];
     public DateTime? LastBookedOnUtc { get; internal set; }
     public IsActive IsActive { get; private set; }
 
     public static Home Create(CreateHomeParameter parameter)
     {
-        var home = new Home(parameter);
+        var home = new Home(parameter.id,parameter.title, parameter.description, parameter.address, parameter.money, parameter.amenities);
         home.AddDomainEvent(new HomeCreated(home.Id));
         return home;
     }
@@ -37,8 +48,8 @@ public sealed class Home : AggregateRoot<int>
         Title = parameter.title;
         Description = parameter.description;
         Price = parameter.money;
-        Amenities = parameter.amenities;
-        AddDomainEvent(new HomeUpdated(Id, Title, Description, Price, Amenities));
+        HomeAmenities = parameter.amenities;
+        AddDomainEvent(new HomeUpdated(Id, Title, Description, Price, HomeAmenities));
     }
 
     public void Active()

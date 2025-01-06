@@ -3,13 +3,14 @@
 namespace HouseRent.Core.Domain.Bookings.ValueObjects;
 public record DateRange
 {
-    public DateRange()
+    private DateRange()
     {
-
     }
 
-    public DateOnly Start { get; set; }
-    public DateOnly End { get; set; }
+    public DateOnly Start { get; init; }
+
+    public DateOnly End { get; init; }
+
     public int LengthInDays => End.DayNumber - Start.DayNumber;
 
     public static DateRange Create(DateOnly start, DateOnly end)
@@ -25,4 +26,9 @@ public record DateRange
             End = end
         };
     }
+}
+
+public class InvalidDateRangeException : DomainValidationException
+{
+
 }

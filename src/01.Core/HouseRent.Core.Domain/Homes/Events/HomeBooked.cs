@@ -2,4 +2,4 @@
 
 namespace HouseRent.Core.Domain.Homes.Events;
 
-public record HomeBooked(int id) : IDomainEvent;
+public record HomeBooked(long id) : IDomainEvent;

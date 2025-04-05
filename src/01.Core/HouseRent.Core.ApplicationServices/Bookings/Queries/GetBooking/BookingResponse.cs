@@ -21,6 +21,6 @@ public sealed class BookingResponse
 
     public DateTime CreatedOnUtc { get; init; }
 
-    public DateTime HostStatusOnUtc { get; set; }
-    public DateTime GuestStatusOnUtc { get; set; }
+    public DateTime HostStatusOnUtc { get; init; }
+    public DateTime GuestStatusOnUtc { get; init; }
 }

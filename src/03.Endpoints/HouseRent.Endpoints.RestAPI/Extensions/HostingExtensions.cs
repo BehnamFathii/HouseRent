@@ -30,6 +30,8 @@ public static class HostingExtensions
         {
             options.UseSqlServer(connectionString);
         });
+        builder.Services.AddAuthentication().AddJwtBearer();
+        builder.Services.AddAuthorization();
         builder.Services.RegisterDataAccessService(builder.Configuration);
         builder.Services.RegisterStackExchangeRedis(builder.Configuration);
         return builder.Build();

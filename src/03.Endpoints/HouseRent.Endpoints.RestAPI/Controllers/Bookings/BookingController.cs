@@ -2,6 +2,7 @@
 using HouseRent.Core.ApplicationServices.Bookings.Queries.GetBooking;
 using HouseRent.Endpoints.RestAPI.Framework;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseRent.Endpoints.RestAPI.Controllers.Bookings;
@@ -21,6 +22,7 @@ public class BookingsController(ISender sender) : HouseRentController(sender)
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> ReserveBooking(
         [FromBody] ReserveBookingRequest request,
         CancellationToken cancellationToken)

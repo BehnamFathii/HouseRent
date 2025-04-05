@@ -17,6 +17,8 @@ public class HomeController : HouseRentController
     [HttpGet]
     public async Task<IActionResult> SearchHomes(DateOnly startDate,DateOnly endDate,CancellationToken cancellationToken)
     {
+
+        // Khoobam
         var query = new SearchHomesQuery(startDate, endDate);
         
         var result=await CqrsSender.Send(query, cancellationToken);
